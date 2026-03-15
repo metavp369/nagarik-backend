@@ -1,2 +1,16 @@
 fastapi
 uvicorn[standard]
+pydantic
+python-multipart
+httpx
+python-dotenv
+asyncpg
+sqlalchemy
+alembic
+redis
+openai
+twilio
+boto3
+Pillow
+python-jose[cryptography]
+passlib[bcrypt]
