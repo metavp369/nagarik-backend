@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
+﻿from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, List
@@ -6,7 +6,7 @@ from datetime import datetime
 import os, hashlib, json
 
 app = FastAPI(
-    title="Nagarik — Civic Intelligence Platform",
+    title="Nagarik â€” Civic Intelligence Platform",
     description="AI-first civic reporting and escalation backend",
     version="1.0.0"
 )
@@ -19,7 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Civic Categories ────────────────────────────────────────────────────────
+# â”€â”€ Civic Categories â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 CIVIC_CATEGORIES = {
     "roads":        {"dept": "PWD",                  "sla_hours": 72,  "label": "Roads & Potholes"},
     "water":        {"dept": "Jal Board",             "sla_hours": 24,  "label": "Water Supply"},
@@ -45,7 +45,7 @@ issues_db: List[dict] = []
 polls_db:  List[dict] = []
 issue_counter = 1000
 
-# ── Models ──────────────────────────────────────────────────────────────────
+# â”€â”€ Models â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 class IssueCreate(BaseModel):
     title:          Optional[str] = None
     description:    Optional[str] = None
@@ -77,7 +77,7 @@ class WhatsAppMessage(BaseModel):
     type:    Optional[str] = None
     message: Optional[dict] = None
 
-# ── Helpers ─────────────────────────────────────────────────────────────────
+# â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 def hash_phone(phone: str) -> str:
     return hashlib.sha256(phone.encode()).hexdigest()
 
@@ -105,7 +105,7 @@ def get_escalation_level(issue: dict) -> dict:
 def make_public_id(counter: int) -> str:
     return f"NGK-{counter}"
 
-# ── Root & Health ────────────────────────────────────────────────────────────
+# â”€â”€ Root & Health â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 @app.get("/")
 def root():
     return {
@@ -126,7 +126,7 @@ def health():
         "timestamp": datetime.utcnow().isoformat()
     }
 
-# ── Categories ───────────────────────────────────────────────────────────────
+# â”€â”€ Categories â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 @app.get("/api/categories")
 def get_categories():
     return {"categories": [
@@ -134,7 +134,7 @@ def get_categories():
         for k, v in CIVIC_CATEGORIES.items()
     ]}
 
-# ── Issues ───────────────────────────────────────────────────────────────────
+# â”€â”€ Issues â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 @app.post("/api/issues")
 def create_issue(body: IssueCreate, background_tasks: BackgroundTasks):
     global issue_counter
@@ -181,7 +181,7 @@ def create_issue(body: IssueCreate, background_tasks: BackgroundTasks):
     return {
         "success": True,
         "issue": issue,
-        "tracking_url": f"https://nagarik.care/t/{issue_counter}",
+        "tracking_url": f"https://nagarik.online/t/{issue_counter}",
         "message": f"Issue reported successfully! Forwarded to {cat['dept']}."
     }
 
@@ -241,7 +241,7 @@ def upvote_issue(issue_id: int, voter_hash: str):
     issue["urgency_score"] = compute_urgency(issue)
     return {"success": True, "upvote_count": issue["upvote_count"], "urgency_score": issue["urgency_score"]}
 
-# ── Escalation ────────────────────────────────────────────────────────────────
+# â”€â”€ Escalation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 @app.post("/api/escalation/run")
 def run_escalation():
     """Called by hourly cron job"""
@@ -259,7 +259,7 @@ def run_escalation():
                 "public_id":  issue["public_id"],
                 "to_level":   current["level"],
                 "to_role":    current["role"],
-                "reason":     "SLA breached — auto-escalated"
+                "reason":     "SLA breached â€” auto-escalated"
             })
     return {"escalated": escalated, "count": len(escalated), "checked": len(issues_db)}
 
@@ -275,7 +275,7 @@ def get_urgency(issue_id: int):
         "upvote_count":     issue.get("upvote_count", 0),
     }
 
-# ── Civic Health Score ────────────────────────────────────────────────────────
+# â”€â”€ Civic Health Score â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 @app.get("/api/health-score/{city_id}")
 def get_civic_health_score(city_id: str, ward: Optional[str] = None):
     city_issues = [i for i in issues_db if i.get("city_id") == city_id]
@@ -313,7 +313,7 @@ def get_civic_health_score(city_id: str, ward: Optional[str] = None):
         "computed_at":         datetime.utcnow().isoformat()
     }
 
-# ── Polls ─────────────────────────────────────────────────────────────────────
+# â”€â”€ Polls â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 @app.post("/api/polls")
 def create_poll(body: PollCreate):
     poll_id = len(polls_db) + 1
@@ -349,7 +349,7 @@ def vote_poll(poll_id: int, option_id: int, voter_hash: str):
     option["votes"] += 1
     return {"success": True, "poll": poll}
 
-# ── WhatsApp Webhook ──────────────────────────────────────────────────────────
+# â”€â”€ WhatsApp Webhook â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 whatsapp_sessions: dict = {}
 
 @app.post("/api/whatsapp/incoming")
@@ -368,7 +368,7 @@ async def process_whatsapp(body: dict):
 
     if mtype == "image":
         whatsapp_sessions[phone] = {"step": "awaiting_location", "imageUrl": msg.get("url")}
-        print(f"[WhatsApp→{phone}]: Got photo. Asking for location.")
+        print(f"[WhatsAppâ†’{phone}]: Got photo. Asking for location.")
         return
 
     if session.get("step") == "awaiting_location":
@@ -377,7 +377,7 @@ async def process_whatsapp(body: dict):
         cat = get_category_by_keyword(text)
         whatsapp_sessions[phone] = {**session, "step": "awaiting_confirmation",
                                     "location": location, "category": cat}
-        print(f"[WhatsApp→{phone}]: Location received. Category: {cat}. Asking confirm.")
+        print(f"[WhatsAppâ†’{phone}]: Location received. Category: {cat}. Asking confirm.")
         return
 
     if session.get("step") == "awaiting_confirmation":
@@ -387,7 +387,7 @@ async def process_whatsapp(body: dict):
             cat = CIVIC_CATEGORIES.get(cat_id, {})
             global issue_counter
             issue_counter += 1
-            print(f"[WhatsApp→{phone}]: Issue #NGK-{issue_counter} created. Dept: {cat.get('dept')}")
+            print(f"[WhatsAppâ†’{phone}]: Issue #NGK-{issue_counter} created. Dept: {cat.get('dept')}")
             whatsapp_sessions.pop(phone, None)
         elif text.strip() == "2":
             whatsapp_sessions[phone] = {**session, "step": "selecting_category"}
@@ -404,7 +404,7 @@ async def process_whatsapp(body: dict):
             pass
         return
 
-    print(f"[WhatsApp→{phone}]: Welcome message sent.")
+    print(f"[WhatsAppâ†’{phone}]: Welcome message sent.")
 
 def get_category_by_keyword(text: str) -> str:
     text = text.lower()
@@ -422,14 +422,14 @@ def get_category_by_keyword(text: str) -> str:
             return cat_id
     return "roads"
 
-# ── Background tasks ──────────────────────────────────────────────────────────
+# â”€â”€ Background tasks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async def forward_to_dept(issue: dict):
-    """Forward issue to relevant department — hook up email/SMS here"""
+    """Forward issue to relevant department â€” hook up email/SMS here"""
     cat = CIVIC_CATEGORIES.get(issue["category_id"], {})
     print(f"[Nagarik] Issue #{issue['public_id']} forwarded to {cat.get('dept')} | "
           f"Ward: {issue.get('ward')} | Urgency: {issue['urgency_score']}")
 
-# ── Analytics endpoints ───────────────────────────────────────────────────────
+# â”€â”€ Analytics endpoints â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 @app.get("/api/analytics/{city_id}")
 def get_analytics(city_id: str):
     city_issues = [i for i in issues_db if i.get("city_id") == city_id]
